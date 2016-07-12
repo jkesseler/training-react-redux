@@ -19,7 +19,7 @@ describe('Shopping cart reducer', () => {
     expect(result).to.equal(state);
   });
 
-  describe.only('ADD_TO_CART', () => {
+  describe('ADD_TO_CART', () => {
     it('should add the line item to the array', () => {
       const state = [];
       const action = {
@@ -40,7 +40,7 @@ describe('Shopping cart reducer', () => {
       expect(result).to.deep.equal([line1, line2]);
     });
 
-    it.only('should add the amount if a product is added a second time', () => {
+    it('should add the amount if a product is added a second time', () => {
       const state = [line1];
       const action = {
         type: 'ADD_TO_CART',
