@@ -6,7 +6,7 @@ import {
   fetchProductError,
 } from '../fetch-product-actions.js';
 
-describe.only('Reducer: product', () => {
+describe('Reducer: product', () => {
   const initialState = { error: null, loading: false, product: null };
 
   it('should have a valid initial state', () => {
