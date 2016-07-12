@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-// import { searchGiphy } from './giphy-search-service.js';
+import { searchGiphy } from './giphy-search-service.js';
 
 const GiphyListView = ({
   message,
@@ -27,16 +27,50 @@ GiphyListView.propTypes = {
 };
 
 class GiphySearchPage extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      data: []
+    };
+
+    this.onChange = e => this.setState({
+      name: e.target.value,
+    });
+
+    this.onSubmit = (e) => {
+      this.setState({
+        loading: true
+      });
+
+      e.preventDefault();
+      searchGiphy(this.state.name)
+      .then((response) => {
+        this.setState({
+          data: response.data,
+          loading: false
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          message: error.message,
+          loading: false
+        });
+      });
+    };
+  }
+
   render() {
     return (
       <div>
-        <form>
+        {this.state.loading && <h1>Loading ..</h1>}
+        <form onSubmit={this.onSubmit}>
           <p>
             Search:
-            <input name="searchTerm" />
+            <input name="searchTerm" onChange={this.onChange} />
           </p>
         </form>
-        <GiphyListView message="To be implemented" />
+        <GiphyListView giphyList={this.state.data} message={this.state.message} />
         <pre>state = {JSON.stringify(this.state, null, ' ')}</pre>
       </div>
     );
